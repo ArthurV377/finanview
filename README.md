@@ -27,6 +27,7 @@ A API é pública e não exige chave de autenticação.
 - Mensagem de carregamento durante a consulta.
 - Tratamento de erros quando a API não responde ou a consulta é inválida.
 - Interface responsiva para computador e celular.
+- Botão para limpar a conversão.
 
 ## Como executar localmente
 
