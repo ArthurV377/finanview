@@ -52,9 +52,8 @@ finanview/
 
 ## Links
 
-- **Aplicação no ar (GitHub Pages):** PREENCHER
-- **Repositório:** PREENCHER
-
+- **Aplicação no ar (GitHub Pages):** https://arthurv377.github.io/finanview/
+- **Repositório:** https://github.com/ArthurV377/finanview
 ## Tecnologias
 
 - HTML5
