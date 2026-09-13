@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FinanView - conversor de moedas com cotações de câmbio.">
+  <title>FinanView | Conversor de Moedas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="brand">
+        <span class="brand-mark">F</span>
+        <div>
+          <h1>FinanView</h1>
+          <p>Cotações e conversão de moedas</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    <section class="hero">
+      <div>
+        <span class="eyebrow">BOOTCAMP II · ETAPA 01</span>
+        <h2>Converta moedas usando dados de câmbio atualizados.</h2>
+        <p>
+          Consulte uma cotação de referência e descubra quanto vale um valor
+          em outra moeda.
+        </p>
+      </div>
+    </section>
+
+    <section class="card converter-card" aria-labelledby="titulo-conversor">
+      <div class="card-header">
+        <div>
+          <span class="section-label">CONVERSOR</span>
+          <h3 id="titulo-conversor">Faça uma conversão</h3>
+        </div>
+      </div>
+
+      <form id="form-conversao" class="converter-form">
+        <div class="field">
+          <label for="valor">Valor</label>
+          <input id="valor" type="number" min="0.01" step="0.01" value="100" required>
+        </div>
+
+        <div class="field">
+          <label for="moeda-origem">De</label>
+          <select id="moeda-origem">
+            <option value="BRL">BRL — Real brasileiro</option>
+            <option value="USD">USD — Dólar americano</option>
+            <option value="EUR">EUR — Euro</option>
+            <option value="GBP">GBP — Libra esterlina</option>
+            <option value="JPY">JPY — Iene japonês</option>
+            <option value="CAD">CAD — Dólar canadense</option>
+            <option value="AUD">AUD — Dólar australiano</option>
+            <option value="CHF">CHF — Franco suíço</option>
+          </select>
+        </div>
+
+        <button type="button" id="trocar-moedas" class="swap-button" title="Trocar moedas" aria-label="Trocar moedas">
+          ⇄
+        </button>
+
+        <div class="field">
+          <label for="moeda-destino">Para</label>
+          <select id="moeda-destino">
+            <option value="USD">USD — Dólar americano</option>
+            <option value="BRL">BRL — Real brasileiro</option>
+            <option value="EUR">EUR — Euro</option>
+            <option value="GBP">GBP — Libra esterlina</option>
+            <option value="JPY">JPY — Iene japonês</option>
+            <option value="CAD">CAD — Dólar canadense</option>
+            <option value="AUD">AUD — Dólar australiano</option>
+            <option value="CHF">CHF — Franco suíço</option>
+          </select>
+        </div>
+
+        <button type="submit" id="botao-converter" class="primary-button">
+          Converter
+        </button>
+      </form>
+
+      <div id="mensagem" class="message" role="status" aria-live="polite"></div>
+
+      <div id="resultado" class="result hidden">
+        <div class="result-main">
+          <span id="resultado-label">Resultado</span>
+          <strong id="valor-convertido">--</strong>
+        </div>
+
+        <div class="result-details">
+          <div class="detail">
+            <span>Moeda de origem</span>
+            <strong id="info-origem">--</strong>
+          </div>
+          <div class="detail">
+            <span>Moeda de destino</span>
+            <strong id="info-destino">--</strong>
+          </div>
+          <div class="detail">
+            <span>Taxa de câmbio</span>
+            <strong id="info-taxa">--</strong>
+          </div>
+          <div class="detail">
+            <span>Data da cotação</span>
+            <strong id="info-data">--</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-grid">
+      <article class="card info-card">
+        <span class="info-icon">↗</span>
+        <h3>Dados de referência</h3>
+        <p>
+          As taxas são obtidas por uma API pública de câmbio e podem variar
+          conforme a publicação das fontes de referência.
+        </p>
+      </article>
+
+      <article class="card info-card">
+        <span class="info-icon">⚡</span>
+        <h3>Consulta atualizada</h3>
+        <p>
+          Cada conversão realiza uma requisição assíncrona usando
+          <code>fetch()</code> diretamente no navegador.
+        </p>
+      </article>
+
+      <article class="card info-card">
+        <span class="info-icon">✓</span>
+        <h3>Sem chave de API</h3>
+        <p>
+          O projeto utiliza o Frankfurter, uma API pública que não exige
+          cadastro nem chave de autenticação.
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <p>FinanView · Bootcamp II · Etapa 01</p>
+      <a href="https://frankfurter.dev/" target="_blank" rel="noopener noreferrer">
+        Dados: Frankfurter API
+      </a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
