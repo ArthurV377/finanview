@@ -1,11 +1,22 @@
 const API_URL = "https://api.frankfurter.dev/v2";
 
+const botaoLimpar = document.getElementById("botao-limpar");
 const form = document.getElementById("form-conversao");
 const valorInput = document.getElementById("valor");
 const origemSelect = document.getElementById("moeda-origem");
 const destinoSelect = document.getElementById("moeda-destino");
 const botaoConverter = document.getElementById("botao-converter");
 const trocarMoedas = document.getElementById("trocar-moedas");
+botaoLimpar.addEventListener("click", () => {
+  valorInput.value = "";
+  origemSelect.value = "BRL";
+  destinoSelect.value = "USD";
+
+  esconderResultado();
+  mostrarMensagem("");
+
+  valorInput.focus();
+});
 
 const mensagem = document.getElementById("mensagem");
 const resultado = document.getElementById("resultado");
