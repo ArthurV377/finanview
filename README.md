@@ -32,11 +32,12 @@ A API é pública e não exige chave de autenticação.
 
 1. Clone o repositório:
 
-   `git clone URL_DO_REPOSITORIO`
+   `git clone https://github.com/ArthurV377/finanview.git`
 
 2. Entre na pasta do projeto.
+ cd finanview
 
-3. Abra o arquivo `index.html` no navegador.
+4. Abra o arquivo `index.html` no navegador.
 
 Também é possível usar a extensão **Live Server** no VS Code.
 
