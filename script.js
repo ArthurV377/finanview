@@ -62,8 +62,8 @@ function mostrarResultado(dados, valor, origem, destino) {
   const convertido = valor * dados.rate;
 
   valorConvertido.textContent = formatarValor(convertido, destino);
-  infoOrigem.textContent = `${origem} — ${nomesMoedas[origem] || origem}`;
-  infoDestino.textContent = `${destino} — ${nomesMoedas[destino] || destino}`;
+ infoOrigem.textContent = `${dados.base} — ${nomesMoedas[dados.base] || dados.base}`;
+infoDestino.textContent = `${dados.quote} — ${nomesMoedas[dados.quote] || dados.quote}`;
   infoTaxa.textContent = `1 ${origem} = ${dados.rate.toFixed(6)} ${destino}`;
   infoData.textContent = formatarData(dados.date);
 
