@@ -111,10 +111,30 @@
             <span>Data da cotação</span>
             <strong id="info-data">--</strong>
           </div>
+               <button
+        type="button"
+        id="botao-favoritar"
+        class="secondary-button"
+      >
+        ☆ Favoritar moeda de destino
+      </button>
         </div>
       </div>
     </section>
+    <section class="card" aria-labelledby="titulo-favoritos">
+  <div class="card-header">
+    <div>
+      <span class="section-label">PERSISTÊNCIA</span>
+      <h3 id="titulo-favoritos">Minhas moedas favoritas</h3>
+    </div>
+  </div>
 
+  <p id="mensagem-favoritos" class="message" role="status">
+    Carregando favoritos...
+  </p>
+
+  <ul id="lista-favoritos"></ul>
+</section>
     <section class="info-grid">
       <article class="card info-card">
         <span class="info-icon">↗</span>
@@ -154,6 +174,6 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>

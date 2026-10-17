@@ -428,3 +428,48 @@ footer {
 .secondary-button:hover {
   background: var(--surface);
 }
+
+/* Etapa 02 — melhoria visual dos favoritos */
+#lista-favoritos {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+  list-style: none;
+}
+
+#lista-favoritos li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #f8fbff;
+}
+
+#lista-favoritos li span {
+  font-weight: 600;
+}
+
+#lista-favoritos li .secondary-button {
+  width: auto;
+  padding: 8px 14px;
+  color: var(--danger);
+  border-color: #f0c7c4;
+}
+
+#lista-favoritos li .secondary-button:hover {
+  background: #fef2f2;
+}
+
+@media (max-width: 480px) {
+  #lista-favoritos li {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  #lista-favoritos li .secondary-button {
+    width: 100%;
+  }
+}

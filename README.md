@@ -1,67 +1,117 @@
-# FinanView
+# FinanView — Conversor de Moedas
 
-## Autor
-Arthur Valéiro Cavalcante Costa — Matrícula: 22612204
+Aplicação web para conversão de moedas utilizando a API Frankfurter, com persistência de moedas favoritas em banco de dados e execução em container Docker.
 
-## Descrição
-O FinanView é uma aplicação web para conversão de moedas. O usuário informa um valor, escolhe a moeda de origem e a moeda de destino, e a aplicação consulta uma API pública para apresentar o resultado e os detalhes da cotação.
+## Links do projeto
 
-## API utilizada
+- **Aplicação no GitHub Pages:** https://arthurv377.github.io/finanview/
+- **Repositório GitHub:** https://github.com/ArthurV377/finanview
+- **Imagem no Docker Hub:** https://hub.docker.com/r/nigh377/finanview
 
-- **Frankfurter API**
-- Documentação: https://frankfurter.dev/
-- Endpoint utilizado:
-  `https://api.frankfurter.dev/v2/rate/{moeda_origem}/{moeda_destino}`
-
-A API é pública e não exige chave de autenticação.
-
-## Funcionalidades
-
-- Conversão entre diferentes moedas.
-- Consulta assíncrona usando `fetch()`.
-- Exibição do valor convertido.
-- Exibição da moeda de origem e da moeda de destino.
-- Exibição da taxa de câmbio.
-- Exibição da data da cotação.
-- Botão para inverter as moedas.
-- Mensagem de carregamento durante a consulta.
-- Tratamento de erros quando a API não responde ou a consulta é inválida.
-- Interface responsiva para computador e celular.
-- Botão para limpar a conversão.
-
-## Como executar localmente
-
-1. Clone o repositório:
-
-   `git clone https://github.com/ArthurV377/finanview.git`
-
-2. Entre na pasta do projeto.
- cd finanview
-
-4. Abra o arquivo `index.html` no navegador.
-
-Também é possível usar a extensão **Live Server** no VS Code.
-
-## Estrutura
-
-```text
-finanview/
-├── index.html
-├── style.css
-├── script.js
-└── README.md
-```
-
-## Links
-
-- **Aplicação no ar (GitHub Pages):** https://arthurv377.github.io/finanview/
-- **Repositório:** https://github.com/ArthurV377/finanview
-## Tecnologias
+## Tecnologias utilizadas
 
 - HTML5
 - CSS3
 - JavaScript
-- Fetch API
 - Frankfurter API
-- Git e GitHub
-- GitHub Pages
+- Supabase (PostgreSQL)
+- Docker
+- Nginx
+- Git e GitHub Pages
+
+## Funcionalidades
+
+- Conversão entre moedas utilizando a API Frankfurter.
+- Seleção das moedas de origem e destino.
+- Inversão das moedas selecionadas.
+- Cadastro, listagem e exclusão de moedas favoritas.
+- Persistência dos favoritos em banco de dados.
+- Interface responsiva para diferentes tamanhos de tela.
+
+## Persistência de dados
+
+O projeto utiliza o Supabase, serviço baseado em PostgreSQL, para armazenar as moedas favoritas.
+
+### Tabela `favoritos_moedas`
+
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `id` | BIGINT | Identificador único gerado automaticamente |
+| `criado_em` | TIMESTAMPTZ | Data e hora do cadastro |
+| `codigo` | TEXT | Código da moeda, como EUR ou USD |
+| `nome` | TEXT | Nome da moeda |
+
+O campo `codigo` possui uma restrição de unicidade para impedir que a mesma moeda seja cadastrada mais de uma vez.
+
+A aplicação permite criar, listar e excluir registros. Como os dados ficam no banco de dados, os favoritos continuam disponíveis após atualizar ou fechar o navegador.
+
+### Limitação de segurança conhecida
+
+Nesta versão demonstrativa, as políticas de Row Level Security (RLS) permitem operações de leitura, inserção e exclusão para usuários anônimos. Assim, os favoritos não são privados por usuário: quem acessar a aplicação poderá visualizar ou alterar a lista compartilhada.
+
+A aplicação utiliza a chave pública do Supabase no frontend. Chaves secretas ou `service_role` não devem ser expostas no navegador.
+
+## Execução local
+
+É possível abrir o `index.html` no navegador ou utilizar a extensão Live Server do VS Code. Para testar a aplicação conteinerizada, utilize as instruções a seguir.
+
+## Docker
+
+A aplicação é servida pelo Nginx dentro de um container.
+
+### Executar a imagem publicada
+
+```bash
+docker run -d -p 8080:80 --name finanview nigh377/finanview:1.0
+```
+
+Depois, acesse:
+
+http://localhost:8080
+
+Se a porta 8080 ou o nome `finanview` já estiver em uso, escolha outra porta ou nome para o container.
+
+### Construir a imagem localmente
+
+Na raiz do projeto, execute:
+
+```bash
+docker build -t finanview:1.0 .
+docker run -d -p 8080:80 --name finanview finanview:1.0
+```
+
+### Docker Hub
+
+Imagem publicada: https://hub.docker.com/r/nigh377/finanview
+
+Tags previstas para a entrega:
+
+- `nigh377/finanview:1.0`
+- `nigh377/finanview:1.1`
+- `nigh377/finanview:latest`
+
+## SQ1 — Arquivo `.dockerignore`
+
+O arquivo `.dockerignore` exclui arquivos desnecessários, como metadados do Git, configurações locais e rascunhos, do contexto enviado ao Docker durante o build. Isso evita incluir conteúdo irrelevante e pode reduzir o tamanho do contexto e o tempo de construção da imagem.
+
+## SQ2 — Versionamento de imagens
+
+A versão `1.0` corresponde à primeira imagem funcional publicada. A versão `1.1` deve incluir uma melhoria na interface dos favoritos. A tag `latest` deve apontar para a versão mais recente publicada.
+
+## SQ3 — Descrição do Docker Hub
+
+O overview do repositório no Docker Hub deve descrever o FinanView, fornecer um comando pronto para execução e incluir o link do repositório GitHub.
+
+## SQ4 — Execução de dois containers
+
+Evidência do comando `docker ps` mostrando dois containers da aplicação em execução nas portas 8080 e 8081:
+
+> A captura de tela será adicionada ao repositório após a execução dos dois containers.
+
+### Como gerenciaria 100 containers?
+
+Se a aplicação precisasse executar 100 containers, utilizaria uma plataforma de orquestração como Kubernetes. Um cluster reúne os recursos que executam e gerenciam as aplicações. Os Pods são as menores unidades implantáveis do Kubernetes e podem conter um ou mais containers. As réplicas permitem manter múltiplas instâncias da aplicação, enquanto o controlador apropriado ajuda a manter a quantidade desejada, substituir instâncias que falham e distribuir a carga conforme a configuração.
+
+Autor
+
+Arthur Valério Cavalcante Costa
