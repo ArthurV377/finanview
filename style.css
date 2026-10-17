@@ -34,7 +34,10 @@ select {
 button {
   cursor: pointer;
 }
-
+button:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
 .container {
   width: min(1100px, calc(100% - 32px));
   margin: 0 auto;
