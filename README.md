@@ -27,6 +27,7 @@ Aplicação web para conversão de moedas utilizando a API Frankfurter, com pers
 - Cadastro, listagem e exclusão de moedas favoritas.
 - Persistência dos favoritos em banco de dados.
 - Interface responsiva para diferentes tamanhos de tela.
+- Navegação por teclado com indicação visual de foco nos botões.
 
 ## Persistência de dados
 
