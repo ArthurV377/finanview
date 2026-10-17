@@ -62,7 +62,7 @@ A aplicação é servida pelo Nginx dentro de um container.
 ### Executar a imagem publicada
 
 ```bash
-docker run -d -p 8080:80 --name finanview nigh377/finanview:1.0
+docker run -d -p 8080:80 --name finanview nigh377/finanview:1.1
 ```
 
 Depois, acesse:
@@ -76,10 +76,12 @@ Se a porta 8080 ou o nome `finanview` já estiver em uso, escolha outra porta ou
 Na raiz do projeto, execute:
 
 ```bash
-docker build -t finanview:1.0 .
-docker run -d -p 8080:80 --name finanview finanview:1.0
+docker build -t finanview:1.1 .
 ```
-
+Depois, inicie o container:
+```bash
+docker run -d -p 8082:80 --name finanview-local finanview:1.1
+```
 ### Docker Hub
 
 Imagem publicada: https://hub.docker.com/r/nigh377/finanview
@@ -96,11 +98,22 @@ O arquivo `.dockerignore` exclui arquivos desnecessários, como metadados do Git
 
 ## SQ2 — Versionamento de imagens
 
-A versão `1.0` corresponde à primeira imagem funcional publicada. A versão `1.1` deve incluir uma melhoria na interface dos favoritos. A tag `latest` deve apontar para a versão mais recente publicada.
+A versão `1.0` corresponde à primeira imagem funcional publicada. A versão `1.1` inclui uma melhoria na interface da lista de moedas favoritas. A tag `latest` foi atualizada para apontar para a versão mais recente publicada (`1.1`).
+
+As imagens estão disponíveis no [Docker Hub](https://hub.docker.com/r/nigh377/finanview), com as tags `1.0`, `1.1` e `latest`.
 
 ## SQ3 — Descrição do Docker Hub
 
-O overview do repositório no Docker Hub deve descrever o FinanView, fornecer um comando pronto para execução e incluir o link do repositório GitHub.
+O Overview do repositório no Docker Hub foi configurado com uma descrição do FinanView, suas tecnologias, um comando para executar a aplicação e o link para o repositório no GitHub.
+
+- **Docker Hub:** https://hub.docker.com/r/nigh377/finanview
+- **GitHub:** https://github.com/ArthurV377/finanview
+
+Comando de execução:
+
+```bash
+docker run -d -p 8080:80 --name finanview nigh377/finanview:1.1
+```
 
 ## SQ4 — Execução de dois containers
 
