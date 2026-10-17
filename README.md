@@ -106,8 +106,7 @@ O overview do repositório no Docker Hub deve descrever o FinanView, fornecer um
 
 Evidência do comando `docker ps` mostrando dois containers da aplicação em execução nas portas 8080 e 8081:
 
-> A captura de tela será adicionada ao repositório após a execução dos dois containers.
-
+![Evidência SQ4 — dois containers em execução](evidencias/sq4-docker-ps.png)
 ### Como gerenciaria 100 containers?
 
 Se a aplicação precisasse executar 100 containers, utilizaria uma plataforma de orquestração como Kubernetes. Um cluster reúne os recursos que executam e gerenciam as aplicações. Os Pods são as menores unidades implantáveis do Kubernetes e podem conter um ou mais containers. As réplicas permitem manter múltiplas instâncias da aplicação, enquanto o controlador apropriado ajuda a manter a quantidade desejada, substituir instâncias que falham e distribuir a carga conforme a configuração.
