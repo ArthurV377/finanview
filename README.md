@@ -4,9 +4,9 @@ Aplicação web para conversão de moedas utilizando a API Frankfurter, com pers
 
 ## Links do projeto
 
-- **Aplicação no GitHub Pages:** https://arthurv377.github.io/finanview/
-- **Repositório GitHub:** https://github.com/ArthurV377/finanview
-- **Imagem no Docker Hub:** https://hub.docker.com/r/nigh377/finanview
+- **Aplicação no GitHub Pages:** [https://arthurv377.github.io/finanview/](https://arthurv377.github.io/finanview/)
+- **Repositório GitHub:** [https://github.com/ArthurV377/finanview](https://github.com/ArthurV377/finanview)
+- **Imagem no Docker Hub:** [https://hub.docker.com/r/nigh377/finanview](https://hub.docker.com/r/nigh377/finanview)
 
 ## Tecnologias utilizadas
 
@@ -66,9 +66,7 @@ A aplicação é servida pelo Nginx dentro de um container.
 docker run -d -p 8080:80 --name finanview nigh377/finanview:1.1
 ```
 
-Depois, acesse:
-
-http://localhost:8080
+Depois, acesse [http://localhost:8080](http://localhost:8080).
 
 Se a porta 8080 ou o nome `finanview` já estiver em uso, escolha outra porta ou nome para o container.
 
@@ -79,15 +77,20 @@ Na raiz do projeto, execute:
 ```bash
 docker build -t finanview:1.1 .
 ```
+
 Depois, inicie o container:
+
 ```bash
 docker run -d -p 8082:80 --name finanview-local finanview:1.1
 ```
+
+Acesse [http://localhost:8082](http://localhost:8082).
+
 ### Docker Hub
 
-Imagem publicada: https://hub.docker.com/r/nigh377/finanview
+Imagem publicada: [https://hub.docker.com/r/nigh377/finanview](https://hub.docker.com/r/nigh377/finanview)
 
-Tags previstas para a entrega:
+Tags publicadas:
 
 - `nigh377/finanview:1.0`
 - `nigh377/finanview:1.1`
@@ -101,14 +104,14 @@ O arquivo `.dockerignore` exclui arquivos desnecessários, como metadados do Git
 
 A versão `1.0` corresponde à primeira imagem funcional publicada. A versão `1.1` inclui uma melhoria na interface da lista de moedas favoritas. A tag `latest` foi atualizada para apontar para a versão mais recente publicada (`1.1`).
 
-As imagens estão disponíveis no [Docker Hub](https://hub.docker.com/r/nigh377/finanview), com as tags `1.0`, `1.1` e `latest`.
+As três tags estão disponíveis no [Docker Hub](https://hub.docker.com/r/nigh377/finanview).
 
 ## SQ3 — Descrição do Docker Hub
 
 O Overview do repositório no Docker Hub foi configurado com uma descrição do FinanView, suas tecnologias, um comando para executar a aplicação e o link para o repositório no GitHub.
 
-- **Docker Hub:** https://hub.docker.com/r/nigh377/finanview
-- **GitHub:** https://github.com/ArthurV377/finanview
+- **Docker Hub:** [https://hub.docker.com/r/nigh377/finanview](https://hub.docker.com/r/nigh377/finanview)
+- **GitHub:** [https://github.com/ArthurV377/finanview](https://github.com/ArthurV377/finanview)
 
 Comando de execução:
 
@@ -121,10 +124,11 @@ docker run -d -p 8080:80 --name finanview nigh377/finanview:1.1
 Evidência do comando `docker ps` mostrando dois containers da aplicação em execução nas portas 8080 e 8081:
 
 ![Evidência SQ4 — dois containers em execução](evidencias/sq4-docker-ps.png)
+
 ### Como gerenciaria 100 containers?
 
 Se a aplicação precisasse executar 100 containers, utilizaria uma plataforma de orquestração como Kubernetes. Um cluster reúne os recursos que executam e gerenciam as aplicações. Os Pods são as menores unidades implantáveis do Kubernetes e podem conter um ou mais containers. As réplicas permitem manter múltiplas instâncias da aplicação, enquanto o controlador apropriado ajuda a manter a quantidade desejada, substituir instâncias que falham e distribuir a carga conforme a configuração.
 
-Autor
+## Autor
 
 Arthur Valério Cavalcante Costa
