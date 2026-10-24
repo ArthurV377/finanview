@@ -54,7 +54,17 @@ A aplicação utiliza a chave pública do Supabase no frontend. Chaves secretas 
 
 ## Execução local
 
-É possível abrir o `index.html` no navegador ou utilizar a extensão Live Server do VS Code. Para testar a aplicação conteinerizada, utilize as instruções a seguir.
+Instale o Node.js e o Visual Studio Code.
+
+Abra a pasta do projeto no VS Code.
+
+Instale a extensão Live Server, caso ainda não esteja instalada.
+
+Clique com o botão direito no arquivo index.html e selecione Open with Live Server.
+
+Para executar os testes automatizados, utilize npm ci e npm test no terminal, na raiz do projeto.
+
+A conversão utiliza a API externa Frankfurter, e a lista de moedas favoritas utiliza o Supabase. Portanto, essas funcionalidades dependem da disponibilidade dos respectivos serviços e de sua configuração.
 
 ## Docker
 
@@ -128,6 +138,40 @@ Evidência do comando `docker ps` mostrando dois containers da aplicação em ex
 ### Como gerenciaria 100 containers?
 
 Se a aplicação precisasse executar 100 containers, utilizaria uma plataforma de orquestração como Kubernetes. Um cluster reúne os recursos que executam e gerenciam as aplicações. Os Pods são as menores unidades implantáveis do Kubernetes e podem conter um ou mais containers. As réplicas permitem manter múltiplas instâncias da aplicação, enquanto o controlador apropriado ajuda a manter a quantidade desejada, substituir instâncias que falham e distribuir a carga conforme a configuração.
+
+## Testes automatizados 
+
+O projeto utiliza Jest para executar testes automatizados das funções responsáveis pela validação de valores, pelo cálculo da conversão e pela formatação de datas.
+
+### Executar os testes localmente
+
+É necessário ter o Node.js instalado. Na raiz do projeto, execute:
+
+npm ci
+npm test
+
+No Windows PowerShell, caso o comando npm não funcione diretamente, utilize:
+
+npm.cmd ci
+npm.cmd test
+
+Os testes verificam:
+
+Aceitação de valores positivos e rejeição de zero e valores negativos.
+
+Rejeição de textos que não representam números válidos.
+
+Cálculo do valor convertido usando a taxa de câmbio.
+
+Formatação de datas no padrão brasileiro.
+
+### Integração contínua (CI)
+
+O projeto utiliza GitHub Actions para executar os testes automaticamente em pull requests direcionados à branch main e em pushes para essa branch.
+
+O workflow está localizado em .github/workflows/ci.yml. Ele configura o Node.js, instala as dependências com npm ci e executa npm test.
+
+Os testes precisam passar para que o pull request atenda ao requisito de verificação automatizada configurado no repositório.
 
 ## Autor
 
