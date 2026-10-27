@@ -259,3 +259,5 @@ botaoFavoritar.addEventListener("click", salvarFavorito);
 
 // Carrega os favoritos quando a página abre
 listarFavoritos();
+// Mensagem de confirmação de execução
+console.log("FinanView v1.1 carregado com sucesso via Docker!");
