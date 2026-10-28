@@ -189,16 +189,42 @@ async function listarFavoritos() {
     return;
   }
 
+  favoritos = data;
+
+  renderizarFavoritos();
+}
+
+//Rederizar Favoritos
+function renderizarFavoritos() {
+
   listaFavoritos.replaceChildren();
 
-  if (data.length === 0) {
-    mostrarMensagemFavoritos("Você ainda não tem moedas favoritas.");
+  let lista = [...favoritos];
+
+  const pesquisa = pesquisaFavoritos.value.toLowerCase().trim();
+
+  if (pesquisa) {
+    lista = lista.filter((moeda) =>
+      moeda.nome.toLowerCase().includes(pesquisa) ||
+      moeda.codigo.toLowerCase().includes(pesquisa)
+    );
+  }
+
+  if (ordenacaoFavoritos.value === "az") {
+    lista.sort((a, b) => a.nome.localeCompare(b.nome));
+  } else {
+    lista.sort((a, b) => b.nome.localeCompare(a.nome));
+  }
+
+  if (lista.length === 0) {
+    mostrarMensagemFavoritos("Nenhuma moeda encontrada.");
     return;
   }
 
-  mostrarMensagemFavoritos(`${data.length} moeda(s) favorita(s).`);
+  mostrarMensagemFavoritos(`${lista.length} moeda(s) favorita(s).`);
 
-  data.forEach((moeda) => {
+  lista.forEach((moeda) => {
+
     const item = document.createElement("li");
     const texto = document.createElement("span");
     const botaoExcluir = document.createElement("button");
@@ -208,15 +234,18 @@ async function listarFavoritos() {
     botaoExcluir.type = "button";
     botaoExcluir.textContent = "Excluir";
     botaoExcluir.className = "secondary-button";
+
     botaoExcluir.addEventListener("click", () => {
       excluirFavorito(moeda.id);
     });
 
     item.append(texto, botaoExcluir);
-    listaFavoritos.appendChild(item);
-  });
-}
 
+    listaFavoritos.appendChild(item);
+
+  });
+
+}
 // Salva a moeda selecionada no campo "Para"
 async function salvarFavorito() {
   const codigo = destinoSelect.value;
@@ -273,3 +302,11 @@ botaoFavoritar.addEventListener("click", salvarFavorito);
 
 // Carrega os favoritos quando a página abre
 listarFavoritos();
+
+pesquisaFavoritos.addEventListener("input", () => {
+  renderizarFavoritos();
+});
+
+ordenacaoFavoritos.addEventListener("change", () => {
+  renderizarFavoritos();
+});
