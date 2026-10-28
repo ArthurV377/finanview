@@ -129,11 +129,24 @@
     </div>
   </div>
 
-  <p id="mensagem-favoritos" class="message" role="status">
-    Carregando favoritos...
-  </p>
+<p id="mensagem-favoritos" class="message" role="status">
+  Carregando favoritos...
+</p>
 
-  <ul id="lista-favoritos"></ul>
+<div class="favoritos-controles">
+  <input
+    type="text"
+    id="pesquisa-favoritos"
+    placeholder="Pesquisar moeda..."
+  >
+
+  <select id="ordenacao-favoritos">
+    <option value="az">A-Z</option>
+    <option value="za">Z-A</option>
+  </select>
+</div>
+
+<ul id="lista-favoritos"></ul>
 </section>
     <section class="info-grid">
       <article class="card info-card">
