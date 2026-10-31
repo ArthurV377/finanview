@@ -1,4 +1,9 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import {
+  validarValor,
+  calcularConversao,
+  formatarData
+} from "./currency-utils.js";
 
 const SUPABASE_URL = "https://wfjeragfxalntuebwakh.supabase.co";
 const SUPABASE_KEY = "sb_publishable_0Yiz1X7DHEjeNGq_Y6jnmA_bJNpFrs1";
@@ -61,10 +66,6 @@ function formatarValor(valor, moeda) {
   }).format(valor);
 }
 
-function formatarData(data) {
-  const [ano, mes, dia] = data.split("-");
-  return `${dia}/${mes}/${ano}`;
-}
 
 function mostrarMensagem(texto, tipo = "") {
   mensagem.textContent = texto;
@@ -76,8 +77,7 @@ function esconderResultado() {
 }
 
 function mostrarResultado(dados, valor, origem, destino) {
-  const convertido = valor * dados.rate;
-
+const convertido = calcularConversao(valor, dados.rate);
   valorConvertido.textContent = formatarValor(convertido, destino);
  infoOrigem.textContent = `${dados.base} — ${nomesMoedas[dados.base] || dados.base}`;
 infoDestino.textContent = `${dados.quote} — ${nomesMoedas[dados.quote] || dados.quote}`;
@@ -92,7 +92,7 @@ async function converterMoeda() {
   const origem = origemSelect.value;
   const destino = destinoSelect.value;
 
-  if (!valor || valor <= 0) {
+  if (!validarValor(valor)) {
     esconderResultado();
     mostrarMensagem("Digite um valor maior que zero.", "error");
     valorInput.focus();
