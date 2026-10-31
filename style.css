@@ -593,3 +593,23 @@ footer {
     width: 100%;
   }
 }
+
+.favoritos-controles {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+#pesquisa-favoritos {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+#ordenacao-favoritos {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+

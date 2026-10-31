@@ -1,4 +1,9 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import {
+  validarValor,
+  calcularConversao,
+  formatarData
+} from "./currency-utils.js";
 
 const SUPABASE_URL = "https://wfjeragfxalntuebwakh.supabase.co";
 const SUPABASE_KEY = "sb_publishable_0Yiz1X7DHEjeNGq_Y6jnmA_bJNpFrs1";
@@ -61,10 +66,6 @@ function formatarValor(valor, moeda) {
   }).format(valor);
 }
 
-function formatarData(data) {
-  const [ano, mes, dia] = data.split("-");
-  return `${dia}/${mes}/${ano}`;
-}
 
 function mostrarMensagem(texto, tipo = "") {
   mensagem.textContent = texto;
@@ -76,8 +77,7 @@ function esconderResultado() {
 }
 
 function mostrarResultado(dados, valor, origem, destino) {
-  const convertido = valor * dados.rate;
-
+const convertido = calcularConversao(valor, dados.rate);
   valorConvertido.textContent = formatarValor(convertido, destino);
  infoOrigem.textContent = `${dados.base} — ${nomesMoedas[dados.base] || dados.base}`;
 infoDestino.textContent = `${dados.quote} — ${nomesMoedas[dados.quote] || dados.quote}`;
@@ -92,7 +92,7 @@ async function converterMoeda() {
   const origem = origemSelect.value;
   const destino = destinoSelect.value;
 
-  if (!valor || valor <= 0) {
+  if (!validarValor(valor)) {
     esconderResultado();
     mostrarMensagem("Digite um valor maior que zero.", "error");
     valorInput.focus();
@@ -163,6 +163,10 @@ converterMoeda();
 const botaoFavoritar = document.getElementById("botao-favoritar");
 const listaFavoritos = document.getElementById("lista-favoritos");
 const mensagemFavoritos = document.getElementById("mensagem-favoritos");
+const pesquisaFavoritos = document.getElementById("pesquisa-favoritos");
+const ordenacaoFavoritos = document.getElementById("ordenacao-favoritos");
+
+let favoritos = [];
 
 // Mostra mensagens na seção de favoritos
 function mostrarMensagemFavoritos(texto, tipo = "") {
@@ -185,16 +189,42 @@ async function listarFavoritos() {
     return;
   }
 
+  favoritos = data;
+
+  renderizarFavoritos();
+}
+
+//Rederizar Favoritos
+function renderizarFavoritos() {
+
   listaFavoritos.replaceChildren();
 
-  if (data.length === 0) {
-    mostrarMensagemFavoritos("Você ainda não tem moedas favoritas.");
+  let lista = [...favoritos];
+
+  const pesquisa = pesquisaFavoritos.value.toLowerCase().trim();
+
+  if (pesquisa) {
+    lista = lista.filter((moeda) =>
+      moeda.nome.toLowerCase().includes(pesquisa) ||
+      moeda.codigo.toLowerCase().includes(pesquisa)
+    );
+  }
+
+  if (ordenacaoFavoritos.value === "az") {
+    lista.sort((a, b) => a.nome.localeCompare(b.nome));
+  } else {
+    lista.sort((a, b) => b.nome.localeCompare(a.nome));
+  }
+
+  if (lista.length === 0) {
+    mostrarMensagemFavoritos("Nenhuma moeda encontrada.");
     return;
   }
 
-  mostrarMensagemFavoritos(`${data.length} moeda(s) favorita(s).`);
+  mostrarMensagemFavoritos(`${lista.length} moeda(s) favorita(s).`);
 
-  data.forEach((moeda) => {
+  lista.forEach((moeda) => {
+
     const item = document.createElement("li");
     const texto = document.createElement("span");
     const botaoExcluir = document.createElement("button");
@@ -204,33 +234,37 @@ async function listarFavoritos() {
     botaoExcluir.type = "button";
     botaoExcluir.textContent = "Excluir";
     botaoExcluir.className = "secondary-button";
+
     botaoExcluir.addEventListener("click", () => {
       excluirFavorito(moeda.id);
     });
 
     item.append(texto, botaoExcluir);
-    listaFavoritos.appendChild(item);
-  });
-}
 
+    listaFavoritos.appendChild(item);
+
+  });
+
+}
 // Salva a moeda selecionada no campo "Para"
 async function salvarFavorito() {
   const codigo = destinoSelect.value;
   const nome = nomesMoedas[codigo] || codigo;
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("favoritos_moedas")
-    .insert({ codigo, nome });
+    .insert({ codigo, nome })
+    .select();
 
   if (error) {
-    console.error("Erro ao salvar favorito:", error);
+    alert(
+      "Código: " + error.code +
+      "\nMensagem: " + error.message +
+      "\nDetalhes: " + error.details +
+      "\nHint: " + error.hint
+    );
 
-    if (error.code === "23505") {
-      mostrarMensagemFavoritos("Essa moeda já está nos favoritos.");
-    } else {
-      mostrarMensagemFavoritos("Não foi possível salvar. Verifique as permissões do Supabase.", "error");
-    }
-
+    console.log(error);
     return;
   }
 
@@ -240,6 +274,13 @@ async function salvarFavorito() {
 
 // Exclui uma moeda pelo ID do banco
 async function excluirFavorito(id) {
+
+  const confirmar = confirm("Tem certeza que deseja excluir esta moeda dos favoritos?");
+
+  if (!confirmar) {
+    return;
+  }
+
   const { error } = await supabase
     .from("favoritos_moedas")
     .delete()
@@ -251,6 +292,8 @@ async function excluirFavorito(id) {
     return;
   }
 
+  mostrarMensagemFavoritos("Moeda removida dos favoritos.");
+
   await listarFavoritos();
 }
 
@@ -259,3 +302,11 @@ botaoFavoritar.addEventListener("click", salvarFavorito);
 
 // Carrega os favoritos quando a página abre
 listarFavoritos();
+
+pesquisaFavoritos.addEventListener("input", () => {
+  renderizarFavoritos();
+});
+
+ordenacaoFavoritos.addEventListener("change", () => {
+  renderizarFavoritos();
+});
