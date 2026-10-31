@@ -7,7 +7,7 @@ import {
 
 describe("validarValor", () => {
   test("aceita valores positivos", () => {
-expect(validarValor(10)).toBe(false);  });
+expect(validarValor(10)).toBe(true);  });
 
   test("rejeita zero e valores negativos", () => {
     expect(validarValor(0)).toBe(false);
