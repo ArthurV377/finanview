@@ -1,0 +1,24 @@
+{
+  "name": "finanview-etapa-01",
+  "version": "1.0.0",
+  "description": "Aplicação web para conversão de moedas utilizando a API Frankfurter, com persistência de moedas favoritas em banco de dados e execução em container Docker.",
+  "main": "script.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArthurV377/finanview.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/ArthurV377/finanview/issues"
+  },
+  "homepage": "https://github.com/ArthurV377/finanview#readme",
+  "devDependencies": {
+    "jest": "^30.5.2"
+  }
+}
