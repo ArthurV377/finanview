@@ -37,7 +37,7 @@ Utilizamos o [Supabase](https://supabase.com/), baseado em PostgreSQL, para salv
 1. Clone o repositório:
 
 ```bash
-git clone [https://github.com/ArthurV377/finanview.git](https://github.com/ArthurV377/finanview.git)
+git clone https://github.com/ArthurV377/finanview.git
 ```
 
 2. Entre na pasta do projeto:
