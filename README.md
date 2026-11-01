@@ -9,10 +9,10 @@
 
 | Nome | Matrícula | GitHub | Responsabilidade | Principal PR |
 |---|---|---|---|---|
-|Cláudio Macedo Gama Filho | 22603506 | [claudiomacedo74] | Front-end e acessibilidade | [PR #4](https://github.com/ArthurV377/finanview/pull/4) |
-| Integrante 2 | XXXXXX | @usuario2 | Conversão de moedas e Supabase | [PR #2](https://github.com/ArthurV377/finanview/pull/2) |
-| Arthur Valério Cavalcante Costa | 22612204 | ArthurV377 | Testes automatizados e CI | [PR #1](https://github.com/ArthurV377/finanview/pull/1) |
-| Tiago | 22606645 | [@TiagoRibas1] | Docker e documentação | [PR #4](https://github.com/ArthurV377/finanview/pull/4) |
+| Cláudio Macedo Gama Filho | 22603506 | [@claudiomacedo74](https://github.com/claudiomacedo74) | Front-end e acessibilidade | [PR #4](https://github.com/ArthurV377/finanview/pull/4) |
+| Pedro Moita Vianna Bastos | 22610254 | [@PedroVianna08](https://github.com/PedroVianna08) | Conversão de moedas e Supabase | [PR #3](https://github.com/ArthurV377/finanview/pull/3) |
+| Arthur Valério Cavalcante Costa | 22612204 | [@ArthurV377](https://github.com/ArthurV377) | Testes automatizados e CI | [PR #1](https://github.com/ArthurV377/finanview/pull/1) |
+| Tiago Ribeiro van Der Broocke | 22606645 | [@TiagoRibas1](https://github.com/TiagoRibas1) | Docker e documentação | [PR #2](https://github.com/ArthurV377/finanview/pull/2) |
 
 ---
 
@@ -37,7 +37,7 @@ Utilizamos o [Supabase](https://supabase.com/), baseado em PostgreSQL, para salv
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/ArthurV377/finanview.git
+git clone [https://github.com/ArthurV377/finanview.git](https://github.com/ArthurV377/finanview.git)
 ```
 
 2. Entre na pasta do projeto:
@@ -58,27 +58,35 @@ Para baixar e executar o projeto diretamente pelo Docker, utilize:
 docker run -d -p 8080:80 --name finanview tiagoribas/finanview:latest
 ```
 
-Depois, abra o navegador e acesse:
-
-http://localhost:8080
+Depois, abra o navegador e acesse: `http://localhost:8080`
 
 ---
 
-## 4. Como Executar os Testes
+## 4. Testes automatizados 
 
-Para rodar os testes automatizados do projeto, siga os passos:
+O projeto utiliza Jest para executar testes automatizados das funções responsáveis pela validação de valores, pelo cálculo da conversão e pela formatação de datas.
 
-1. Instale as dependências:
+### Executar os testes localmente
 
-```bash
-npm install
-```
-
-2. Execute os testes:
+É necessário ter o Node.js instalado. Na raiz do projeto, execute:
 
 ```bash
+npm ci
 npm test
 ```
+
+No Windows PowerShell, caso o comando `npm` não funcione diretamente, utilize:
+
+```powershell
+npm.cmd ci
+npm.cmd test
+```
+
+Os testes verificam:
+* Aceitação de valores positivos e rejeição de zero e valores negativos.
+* Rejeição de textos que não representam números válidos.
+* Cálculo do valor convertido usando a taxa de câmbio.
+* Formatação de datas no padrão brasileiro.
 
 ---
 
