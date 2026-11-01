@@ -1,130 +1,105 @@
+
 # FinanView — Conversor de Moedas
 
-Aplicação web para conversão de moedas utilizando a API Frankfurter, com persistência de moedas favoritas em banco de dados e execução em container Docker.
+**Repositório:** https://github.com/ArthurV377/finanview
 
-## Links do projeto
+---
 
-- **Aplicação no GitHub Pages:** https://arthurv377.github.io/finanview/
-- **Repositório GitHub:** https://github.com/ArthurV377/finanview
-- **Imagem no Docker Hub:** https://hub.docker.com/r/nigh377/finanview
+## 1. Integrantes do Grupo
 
-## Tecnologias utilizadas
+| Nome | Matrícula | GitHub | Responsabilidade | Principal PR |
+|---|---|---|---|---|
+|Cláudio Macedo Gama Filho | 22603506 | [claudiomacedo74] | Front-end e acessibilidade | [PR #4](https://github.com/ArthurV377/finanview/pull/4) |
+| Integrante 2 | XXXXXX | @usuario2 | Conversão de moedas e Supabase | [PR #2](https://github.com/ArthurV377/finanview/pull/2) |
+| Arthur Valério Cavalcante Costa | 22612204 | ArthurV377 | Testes automatizados e CI | [PR #1](https://github.com/ArthurV377/finanview/pull/1) |
+| Tiago | 22606645 | [@TiagoRibas1] | Docker e documentação | [PR #4](https://github.com/ArthurV377/finanview/pull/4) |
 
-- HTML5
-- CSS3
-- JavaScript
-- Frankfurter API
-- Supabase (PostgreSQL)
-- Docker
-- Nginx
-- Git e GitHub Pages
+---
 
-## Funcionalidades
+## 2. Sobre o Projeto
 
-- Conversão entre moedas utilizando a API Frankfurter.
-- Seleção das moedas de origem e destino.
-- Inversão das moedas selecionadas.
-- Cadastro, listagem e exclusão de moedas favoritas.
-- Persistência dos favoritos em banco de dados.
-- Interface responsiva para diferentes tamanhos de tela.
-- Navegação por teclado com indicação visual de foco nos botões.
+O FinanView é uma aplicação web que permite consultar cotações e converter moedas em tempo real. Também conta com uma opção para salvar moedas favoritas e facilitar o acesso às cotações.
 
-## Persistência de dados
+**API utilizada**
 
-O projeto utiliza o Supabase, serviço baseado em PostgreSQL, para armazenar as moedas favoritas.
+O projeto utiliza a [Frankfurter API](https://www.frankfurter.dev/), que fornece informações sobre taxas de câmbio e permite realizar conversões sem precisar de uma chave de acesso.
 
-### Tabela `favoritos_moedas`
+**Banco de dados**
 
-| Campo | Tipo | Descrição |
-|---|---|---|
-| `id` | BIGINT | Identificador único gerado automaticamente |
-| `criado_em` | TIMESTAMPTZ | Data e hora do cadastro |
-| `codigo` | TEXT | Código da moeda, como EUR ou USD |
-| `nome` | TEXT | Nome da moeda |
+Utilizamos o [Supabase](https://supabase.com/), baseado em PostgreSQL, para salvar e consultar as moedas favoritas dos usuários.
 
-O campo `codigo` possui uma restrição de unicidade para impedir que a mesma moeda seja cadastrada mais de uma vez.
+---
 
-A aplicação permite criar, listar e excluir registros. Como os dados ficam no banco de dados, os favoritos continuam disponíveis após atualizar ou fechar o navegador.
+## 3. Como Executar o Projeto
 
-### Limitação de segurança conhecida
+### Execução local
 
-Nesta versão demonstrativa, as políticas de Row Level Security (RLS) permitem operações de leitura, inserção e exclusão para usuários anônimos. Assim, os favoritos não são privados por usuário: quem acessar a aplicação poderá visualizar ou alterar a lista compartilhada.
-
-A aplicação utiliza a chave pública do Supabase no frontend. Chaves secretas ou `service_role` não devem ser expostas no navegador.
-
-## Execução local
-
-É possível abrir o `index.html` no navegador ou utilizar a extensão Live Server do VS Code. Para testar a aplicação conteinerizada, utilize as instruções a seguir.
-
-## Docker
-
-A aplicação é servida pelo Nginx dentro de um container.
-
-### Executar a imagem publicada
+1. Clone o repositório:
 
 ```bash
-docker run -d -p 8080:80 --name finanview nigh377/finanview:1.1
+git clone https://github.com/ArthurV377/finanview.git
 ```
 
-Depois, acesse:
+2. Entre na pasta do projeto:
+
+```bash
+cd finanview
+```
+
+3. Abra o arquivo `index.html` utilizando uma extensão como Live Server no VS Code ou outro servidor local.
+
+### Execução com Docker
+
+**Imagem no Docker Hub:** https://hub.docker.com/r/tiagoribas/finanview
+
+Para baixar e executar o projeto diretamente pelo Docker, utilize:
+
+```bash
+docker run -d -p 8080:80 --name finanview tiagoribas/finanview:latest
+```
+
+Depois, abra o navegador e acesse:
 
 http://localhost:8080
 
-Se a porta 8080 ou o nome `finanview` já estiver em uso, escolha outra porta ou nome para o container.
+---
 
-### Construir a imagem localmente
+## 4. Como Executar os Testes
 
-Na raiz do projeto, execute:
+Para rodar os testes automatizados do projeto, siga os passos:
 
-```bash
-docker build -t finanview:1.1 .
-```
-Depois, inicie o container:
-```bash
-docker run -d -p 8082:80 --name finanview-local finanview:1.1
-```
-### Docker Hub
-
-Imagem publicada: https://hub.docker.com/r/nigh377/finanview
-
-Tags previstas para a entrega:
-
-- `nigh377/finanview:1.0`
-- `nigh377/finanview:1.1`
-- `nigh377/finanview:latest`
-
-## SQ1 — Arquivo `.dockerignore`
-
-O arquivo `.dockerignore` exclui arquivos desnecessários, como metadados do Git, configurações locais e rascunhos, do contexto enviado ao Docker durante o build. Isso evita incluir conteúdo irrelevante e pode reduzir o tamanho do contexto e o tempo de construção da imagem.
-
-## SQ2 — Versionamento de imagens
-
-A versão `1.0` corresponde à primeira imagem funcional publicada. A versão `1.1` inclui uma melhoria na interface da lista de moedas favoritas. A tag `latest` foi atualizada para apontar para a versão mais recente publicada (`1.1`).
-
-As imagens estão disponíveis no [Docker Hub](https://hub.docker.com/r/nigh377/finanview), com as tags `1.0`, `1.1` e `latest`.
-
-## SQ3 — Descrição do Docker Hub
-
-O Overview do repositório no Docker Hub foi configurado com uma descrição do FinanView, suas tecnologias, um comando para executar a aplicação e o link para o repositório no GitHub.
-
-- **Docker Hub:** https://hub.docker.com/r/nigh377/finanview
-- **GitHub:** https://github.com/ArthurV377/finanview
-
-Comando de execução:
+1. Instale as dependências:
 
 ```bash
-docker run -d -p 8080:80 --name finanview nigh377/finanview:1.1
+npm install
 ```
 
-## SQ4 — Execução de dois containers
+2. Execute os testes:
 
-Evidência do comando `docker ps` mostrando dois containers da aplicação em execução nas portas 8080 e 8081:
+```bash
+npm test
+```
 
-![Evidência SQ4 — dois containers em execução](evidencias/sq4-docker-ps.png)
-### Como gerenciaria 100 containers?
+---
 
-Se a aplicação precisasse executar 100 containers, utilizaria uma plataforma de orquestração como Kubernetes. Um cluster reúne os recursos que executam e gerenciam as aplicações. Os Pods são as menores unidades implantáveis do Kubernetes e podem conter um ou mais containers. As réplicas permitem manter múltiplas instâncias da aplicação, enquanto o controlador apropriado ajuda a manter a quantidade desejada, substituir instâncias que falham e distribuir a carga conforme a configuração.
+## 5. Evidências e Integração
 
-Autor
+### PR bloqueada pelo CI
 
-Arthur Valério Cavalcante Costa
+Imagem mostrando uma Pull Request bloqueada após a execução das verificações do GitHub Actions.
+
+![PR bloqueada pelo CI](evidencias/pr_bloqueada.png)
+
+### Containers em execução
+
+Registro dos containers ativos utilizando o comando `docker ps`.
+
+![Containers Docker em execução](evidencias/docker_ps.png)
+
+### Conflito de merge resolvido
+
+Durante a integração das branches com a branch principal `main`, tivemos um conflito no arquivo `index.html`.
+
+O problema aconteceu na parte em que a estrutura principal da página se encontrava com o rodapé. Para resolver, analisamos as alterações no VS Code e ajustamos o código manualmente, mantendo os elementos necessários e removendo as duplicações.
+
+Depois disso, o conflito foi resolvido e o merge pôde ser concluído normalmente.
